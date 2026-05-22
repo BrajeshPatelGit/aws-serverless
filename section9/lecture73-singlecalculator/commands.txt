@@ -50,22 +50,29 @@ Get Role:
 aws iam get-role --role-name lambda-ex
 
 Get role arn:
-"Arn": "arn:aws:iam::308360398142:role/lambda-ex"
+"Arn": "arn:aws:iam::229209687346:role/lambda-ex"
 
 Run Command:
-aws lambda create-function `
-    --function-name calculator `
-    --runtime nodejs14.x `
-    --zip-file fileb://function.zip `
-    --handler index.handler `
-    --role arn:aws:iam::308360398142:role/lambda-ex
+aws lambda create-function \
+    --function-name calculator \
+    --runtime nodejs14.x \
+    --zip-file fileb://function.zip \
+    --handler index.handler \
+    --role arn:aws:iam::229209687346:role/lambda-ex
+
+
+aws lambda add-permission \
+  --function-name calculator \
+  --action lambda:InvokeFunctionUrl \
+  --principal * \
+  --function-url-auth-type NONE
 
 ---
 4- Create Function url config with cli			
 
 Run Command:
-aws lambda create-function-url-config `
-    --function-name calculator `
+aws lambda create-function-url-config \
+    --function-name calculator \
     --auth-type NONE
 
 Response:

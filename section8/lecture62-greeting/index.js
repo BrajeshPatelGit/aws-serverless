@@ -8,7 +8,7 @@ exports.handler = async (event) => {
     let name = event.name === undefined ? 'you' : event.name;
     let city = event.city === undefined ? 'World' : event.city;
     let time = times.indexOf(event.time)<0 ? 'day' : event.time;
-    let day = days.indexOf(event.day)<0 ? null : event.day;
+    let day = days.indexOf(event.day)<1 ? null : event.day;
 
     // generate greeting message
     let greeting = 'Good ' + time + ', ' + name + ' of ' + city + '. ' + 'Happy ' + day + ' !';

@@ -38,7 +38,7 @@ Get Role:
 aws iam get-role --role-name lambda-ex
        
 Get role arn:
-	"Arn": "arn:aws:iam::308360398142:role/lambda-ex",
+	"Arn": "arn:aws:iam::229209687346:role/lambda-ex",
 
 Run Command:
 
@@ -53,10 +53,10 @@ aws lambda create-function `
 mac
 aws lambda create-function \
     --function-name my-function3 \
-    --runtime nodejs14.x \
+    --runtime nodejs24.x \
     --zip-file fileb://function.zip \
     --handler index.handler \
-    --role arn:aws:iam::308360398142:role/lambda-ex
+    --role arn:aws:iam::229209687346:role/lambda-ex
 ---
 4- invoke lambda function with cli
 
