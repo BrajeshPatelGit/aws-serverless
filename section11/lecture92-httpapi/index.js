@@ -1,24 +1,24 @@
-exports.handler = async (event) => {
+export const handler = async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
     let body;
     
     try {
         switch (event.routeKey) {
-            case "GET /product":
-                body = `Processing Get All Products`; // GET product
+            case "GET /prod":
+                body = `Processing Get All prods`; // GET prod
                 break;
-            case "GET /product/{id}":
+            case "GET /prod/{id}":
                 if(event.pathParameters != null) {
-                    body = `Processing Get Product Id with "${event.pathParameters.id}"`; // GET product/1234
+                    body = `Processing Get prod Id with "${event.pathParameters.id}"`; // GET prod/1234
                 }
                 break;
-            case "POST /product":
+            case "POST /prod":
                 let payload = JSON.parse(event.body);
-                body = `Processing Post Product Id with "${payload}"`; // POST /product
+                body = `Processing Post prod Id with "${payload}"`; // POST /prod
                 break;
-            case "DELETE /product/{id}":
+            case "DELETE /prod/{id}":
                 if(event.pathParameters != null) {
-                    body = `Processing Delete Product Id with "${event.pathParameters.id}"`; // DELETE product/1234
+                    body = `Processing Delete prod Id with "${event.pathParameters.id}"`; // DELETE prod/1234
                 }
                 break;
             default:
