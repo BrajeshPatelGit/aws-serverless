@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require('@aws-sdk/client-apigatewaymanagementapi');
 
 exports.handler = async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
@@ -22,19 +22,14 @@ exports.handler = async (event) => {
             case "sendMessage":
                 const message = JSON.parse(event.body).message;
                 body = `Responding sendMessage with "${message}"`; // sendMessage
-      
-                const callbackAPI = new AWS.ApiGatewayManagementApi({
-                  apiVersion: '2018-11-29',
-                  endpoint:
-                    event.requestContext.domainName + '/' + event.requestContext.stage,
-                });
-      
-                await callbackAPI
-                    .postToConnection({ ConnectionId: connectionId, Data: body })
-                    .promise();
+
+                const endpoint = `https://${event.requestContext.domainName}/${event.requestContext.stage}`;
+                const client = new ApiGatewayManagementApiClient({ endpoint });
+                const command = new PostToConnectionCommand({ ConnectionId: connectionId, Data: Buffer.from(body) });
+                await client.send(command);
                 break;
             default:
-                throw new Error(`Unsupported route: "${connectionId}"`);
+                throw new Error(`Unsupported route: "${route}"`);
         }
 
         console.log(body);
