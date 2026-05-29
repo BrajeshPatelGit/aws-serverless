@@ -4,9 +4,15 @@ export const handler = async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
     let body;
     
-    const route = event.requestContext.routeKey;
-    const connectionId = event.requestContext.connectionId;
-    console.log(`ConnectionId = "${connectionId}" - Route = "${route}"`);
+    const requestContext = event.requestContext ?? {};
+    const route = requestContext.routeKey ?? requestContext.http?.method ?? requestContext.eventType;
+    const connectionId = requestContext.connectionId;
+
+    if (!route) {
+        throw new Error('Missing requestContext.routeKey in event; ensure this is an API Gateway WebSocket event');
+    }
+
+    console.log(`ConnectionId = "${connectionId ?? 'unknown'}" - Route = "${route}"`);
 
     try {
         switch (route) {
