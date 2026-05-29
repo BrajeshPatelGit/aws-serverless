@@ -1,6 +1,6 @@
-const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require('@aws-sdk/client-apigatewaymanagementapi');
+import { ApiGatewayManagementApiClient, PostToConnectionCommand } from '@aws-sdk/client-apigatewaymanagementapi';
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
     let body;
     
