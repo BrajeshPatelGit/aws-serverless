@@ -1,68 +1,82 @@
-const AWS = require("aws-sdk");
-const dynamo = new AWS.DynamoDB.DocumentClient();
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const {
+  DynamoDBDocumentClient,
+  DeleteCommand,
+  GetCommand,
+  ScanCommand,
+  PutCommand,
+} = require("@aws-sdk/lib-dynamodb");
 
-exports.handler = async (event, context) => {
+const client = new DynamoDBClient({});
+const dynamo = DynamoDBDocumentClient.from(client);
+
+exports.handler = async (event) => {
   let body;
   let statusCode = 200;
   const headers = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
   try {
     switch (event.httpMethod) {
-      case "DELETE":
-        await dynamo
-          .delete({
+      case "DELETE": {
+        const id = event.pathParameters?.id;
+        if (!id) throw new Error("Missing path parameter: id");
+
+        await dynamo.send(
+          new DeleteCommand({
             TableName: "product",
-            Key: {
-              id: event.pathParameters.id
-            }
+            Key: { id },
           })
-          .promise();
-        body = `Deleted product ${event.pathParameters.id}`;
+        );
+        body = { message: `Deleted product ${id}` };
         break;
-      case "GET":
-        if (event.pathParameters != null) {
-            body = await dynamo
-              .get({
-                TableName: "product",
-                Key: {
-                  id: event.pathParameters.id
-                }
-              })
-              .promise();
+      }
+      case "GET": {
+        const id = event.pathParameters?.id;
+        if (id) {
+          body = await dynamo.send(
+            new GetCommand({
+              TableName: "product",
+              Key: { id },
+            })
+          );
         } else {
-            body = await dynamo.scan({ TableName: "product" }).promise();
+          body = await dynamo.send(new ScanCommand({ TableName: "product" }));
         }
         break;
-      case "POST":
-        let requestJSON = JSON.parse(event.body);
-        await dynamo
-          .put({
+      }
+      case "POST": {
+        const requestJSON = JSON.parse(event.body || "{}");
+        if (!requestJSON.id) {
+          throw new Error("Missing product id in request body");
+        }
+
+        await dynamo.send(
+          new PutCommand({
             TableName: "product",
             Item: {
               id: requestJSON.id,
               price: requestJSON.price,
               title: requestJSON.title,
               description: requestJSON.description,
-            }
+            },
           })
-          .promise();
-        body = `Added/Updated product ${requestJSON.id}`;
+        );
+        body = { message: `Added/Updated product ${requestJSON.id}` };
         break;
+      }
       default:
         throw new Error(`Unsupported route: "${event.httpMethod}"`);
     }
   } catch (err) {
     statusCode = 400;
-    body = err.message;
-  } finally {
-    body = JSON.stringify(body);
+    body = { error: err.message };
   }
 
   return {
     statusCode,
-    body,
-    headers
+    body: JSON.stringify(body),
+    headers,
   };
 };
