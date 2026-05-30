@@ -25,7 +25,7 @@ export const handler = async (event) => {
 
         await dynamo.send(
           new DeleteCommand({
-            TableName: "product",
+            TableName: "frst-dynamo",
             Key: { id },
           })
         );
@@ -37,12 +37,12 @@ export const handler = async (event) => {
         if (id) {
           body = await dynamo.send(
             new GetCommand({
-              TableName: "product",
+              TableName: "frst-dynamo",
               Key: { id },
             })
           );
         } else {
-          body = await dynamo.send(new ScanCommand({ TableName: "product" }));
+          body = await dynamo.send(new ScanCommand({ TableName: "frst-dynamo" }));
         }
         break;
       }
@@ -54,9 +54,10 @@ export const handler = async (event) => {
 
         await dynamo.send(
           new PutCommand({
-            TableName: "product",
+            TableName: "frst-dynamo",
             Item: {
               id: requestJSON.id,
+              name: requestJSON.name,
               price: requestJSON.price,
               title: requestJSON.title,
               description: requestJSON.description,
