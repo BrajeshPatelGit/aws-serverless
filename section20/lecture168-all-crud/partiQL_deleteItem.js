@@ -3,7 +3,7 @@ import { ddbClient } from "./ddbClient.js";
 
 export const params = {
     Statement: "DELETE FROM product  WHERE id=?",
-    Parameters: [{ N: "3" }],
+    Parameters: [{ N: "2" }],
 };
 
 export const run = async () => {

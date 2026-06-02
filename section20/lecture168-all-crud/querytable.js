@@ -5,7 +5,7 @@ export const params = {
     TableName: "product",
     KeyConditionExpression: "id = :i",
     ExpressionAttributeValues: {
-        ":i": { N: "1" } 
+        ":i": { N: "3" } 
     },
     ProjectionExpression: "productName",
 };

@@ -1,5 +1,5 @@
 e-commerce
 
-order table
+order11 table
 	userName - PK
 	orderDate - SK

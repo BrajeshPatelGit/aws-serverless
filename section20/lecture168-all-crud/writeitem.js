@@ -4,8 +4,8 @@ import { ddbClient } from "./ddbClient.js";
 export const params = {
     TableName: "product",
     Item: {
-        id: { N: "1" },
-        productName: { S: "iphoneX" },
+        id: { N: "3" },
+        productName: { S: "iphone3" },
     }
 };
 

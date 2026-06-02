@@ -3,7 +3,7 @@ import { ddbClient } from "./ddbClient.js";
 
 export const params = {
     Statement: "UPDATE product SET productName=? WHERE id=?",
-    Parameters: [{ S: "updated phone" }, { N: "3" }],
+    Parameters: [{ S: "updated I_phone" }, { N: "3" }],
 };
 
 export const run = async () => {

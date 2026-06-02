@@ -6,7 +6,7 @@ export const params = {
         product: {
             Keys: [
                 {
-                    id: { N: "1" },
+                    id: { N: "3" },
                     id: { N: "2" }
                 }
             ],

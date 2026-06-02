@@ -3,7 +3,7 @@ import { ddbClient } from "./ddbClient.js";
 
 export const params = {
     Statement: "INSERT INTO product  value  {'id':?, 'productName':?}",
-    Parameters: [{ N: "3" }, { S: "new phone" }],
+    Parameters: [{ N: "44" }, { S: "moto" }],
 };
 
 export const run = async () => {
