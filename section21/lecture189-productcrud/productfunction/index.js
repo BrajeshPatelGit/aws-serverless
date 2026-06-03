@@ -26,10 +26,18 @@ export const handler = async function(event) {
           body = await createProduct(event);
           break;
         case "DELETE":
-          body = await deleteProduct(event.pathParameters.id);
+          if (event.pathParameters != null && event.pathParameters.id != null) {
+            body = await deleteProduct(event.pathParameters.id);
+          } else {
+            throw new Error("Missing product id in path parameters");
+          }
           break;
         case "PUT":
-          body = await updateProduct(event);
+          if (event.pathParameters != null && event.pathParameters.id != null) {
+            body = await updateProduct(event);
+          } else {
+            throw new Error("Missing product id in path parameters");
+          }
           break;
         default:
           throw new Error(`Unsupported route: "${event.httpMethod}"`);
