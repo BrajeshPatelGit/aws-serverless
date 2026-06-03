@@ -183,18 +183,24 @@ const deleteProduct = async (productId) => {
 const updateProduct = async (event) => {
   try {
     const requestBody = JSON.parse(event.body);
-    const objKeys = Object.keys(requestBody);
-    console.log(`updateProduct function. requestBody : "${requestBody}", objKeys: "${objKeys}"`);
+    // Filter out the 'id' field since it's the partition key and cannot be updated
+    const updateKeys = Object.keys(requestBody).filter(key => key !== 'id');
+    
+    if (updateKeys.length === 0) {
+      throw new Error("No attributes to update");
+    }
+    
+    console.log(`updateProduct function. requestBody : "${JSON.stringify(requestBody)}", updateKeys: "${updateKeys}"`);
 
     const params = {
       TableName: process.env.DYNAMODB_TABLE_NAME,
       Key: marshall({ id: event.pathParameters.id }),
-      UpdateExpression: `SET ${objKeys.map((_, index) => `#key${index} = :value${index}`).join(", ")}`,
-      ExpressionAttributeNames: objKeys.reduce((acc, key, index) => ({
+      UpdateExpression: `SET ${updateKeys.map((_, index) => `#key${index} = :value${index}`).join(", ")}`,
+      ExpressionAttributeNames: updateKeys.reduce((acc, key, index) => ({
           ...acc,
           [`#key${index}`]: key,
       }), {}),
-      ExpressionAttributeValues: marshall(objKeys.reduce((acc, key, index) => ({
+      ExpressionAttributeValues: marshall(updateKeys.reduce((acc, key, index) => ({
           ...acc,
           [`:value${index}`]: requestBody[key],
       }), {})),
