@@ -10,11 +10,14 @@ export const handler = async function(event) {
     try {
       switch (event.httpMethod) {
         case "GET":
-          if (event.queryStringParameters != null) {
+          if (event.pathParameters != null && event.pathParameters.id != null) {
+            if (event.queryStringParameters != null && event.queryStringParameters.category != null) {
+              body = await getProductsByCategory(event);
+            } else {
+              body = await getProduct(event.pathParameters.id);
+            }
+          } else if (event.queryStringParameters != null && event.queryStringParameters.category != null) {
             body = await getProductsByCategory(event);
-          }
-          else if (event.pathParameters != null) {
-            body = await getProduct(event.pathParameters.id);
           } else {
             body = await getAllProducts();
           }
@@ -94,23 +97,40 @@ const getAllProducts = async () => {
 const getProductsByCategory = async (event) => {
   console.log("getProductsByCategory");
   try {
-    const productId = event.pathParameters.id;
+    const productId = event.pathParameters?.id;
     const category = event.queryStringParameters.category;
 
-    const params = {
-      KeyConditionExpression: "id = :productId",
-      FilterExpression: "contains (category, :category)",
-      ExpressionAttributeValues: {
-        ":productId": { S: productId },
-        ":category": { S: category }
-      },      
-      TableName: process.env.DYNAMODB_TABLE_NAME
-    };
- 
-    const { Items } = await ddbClient.send(new QueryCommand(params));
+    if (!category) {
+      return [];
+    }
+
+    let params;
+    let Items;
+
+    if (productId) {
+      params = {
+        TableName: process.env.DYNAMODB_TABLE_NAME,
+        KeyConditionExpression: "id = :productId",
+        FilterExpression: "contains (category, :category)",
+        ExpressionAttributeValues: {
+          ":productId": { S: productId },
+          ":category": { S: category }
+        }
+      };
+      ({ Items } = await ddbClient.send(new QueryCommand(params)));
+    } else {
+      params = {
+        TableName: process.env.DYNAMODB_TABLE_NAME,
+        FilterExpression: "contains (category, :category)",
+        ExpressionAttributeValues: {
+          ":category": { S: category }
+        }
+      };
+      ({ Items } = await ddbClient.send(new ScanCommand(params)));
+    }
 
     console.log(Items);
-    return Items.map((item) => unmarshall(item));
+    return (Items) ? Items.map((item) => unmarshall(item)) : [];
   } catch(e) {
     console.error(e);
     throw e;
