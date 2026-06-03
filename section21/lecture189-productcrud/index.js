@@ -1,7 +1,7 @@
 import { GetItemCommand, ScanCommand, PutItemCommand, DeleteItemCommand, UpdateItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { ddbClient } from "./ddbClient.js"
-import { v4 as uuidv4 } from 'uuid';
+import { ddbClient } from "./ddbClient.js";
+import { randomUUID } from "crypto";
 
 export const handler = async function(event) {
     console.log("request:", JSON.stringify(event, undefined, 2));
@@ -119,11 +119,11 @@ const getProductsByCategory = async (event) => {
 
 const createProduct = async (event) => {
   try {
-    console.log(`createProduct function. event : "${event}"`);
+    console.log(`createProduct function. event : ${JSON.stringify(event)}`);
 
     const productRequest = JSON.parse(event.body);
     // set productid
-    const productId = uuidv4();
+    const productId = randomUUID();
     productRequest.id = productId;
 
     const params = {
