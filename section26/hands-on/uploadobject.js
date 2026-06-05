@@ -2,12 +2,12 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3client } from "./s3client.js";
 import fs from "fs";
 
-const file = "./index.html";
+const file = "./index11.html";
 const fileStream = fs.createReadStream(file);
 
 const params = {
-    Bucket: "new-bucket-from-sdk-98765",
-    Key: "index.html",
+    Bucket: "sdk-s3-bucket-12",
+    Key: "index11.html",
     Body: fileStream
 };
 
