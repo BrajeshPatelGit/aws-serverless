@@ -1,4 +1,4 @@
-exports.handler = async (event) => {
+export const handler = async (event) => {
     console.log("event:", JSON.stringify(event, undefined, 2));
     
     var message = event.Records[0].Sns.Message;

@@ -2,7 +2,7 @@ import { ListSubscriptionsByTopicCommand } from "@aws-sdk/client-sns";
 import { snsClient } from "./snsClient.js";
 
 const params = {    
-    TopicArn: "arn:aws:sns:us-east-2:308360398142:new-topic"
+    TopicArn: "arn:aws:sns:ap-south-1:229209687346:fst-topic"
 };
 
 export const run = async () => {
