@@ -2,9 +2,9 @@ import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { sqsClient } from "./sqsClient.js";
 
 const params = {
-    QueueUrl: "https://sqs.us-east-2.amazonaws.com/308360398142/new-queue",
+    QueueUrl: "https://sqs.ap-south-1.amazonaws.com/229209687346/new-queue",
     DelaySeconds: 10,
-    MessageBody: "test send message from nodejs app using aws sdk"
+    MessageBody: "test-22 send message from nodejs app using aws sdk"
   };
   
 

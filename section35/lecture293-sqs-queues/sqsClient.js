@@ -1,4 +1,4 @@
 import { SQSClient } from "@aws-sdk/client-sqs";
-const REGION = "us-east-2";
+const REGION = "ap-south-1";
 const sqsClient = new SQSClient({ region: REGION });
 export { sqsClient };

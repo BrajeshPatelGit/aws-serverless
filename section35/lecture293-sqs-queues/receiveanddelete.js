@@ -1,7 +1,7 @@
 import { ReceiveMessageCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs";
 import { sqsClient } from "./sqsClient.js";
 
-const queueURL = "https://sqs.us-east-2.amazonaws.com/308360398142/new-queue";
+const queueURL = "https://sqs.ap-south-1.amazonaws.com/229209687346/new-queue";
 
 const params = {
     QueueUrl: queueURL,
