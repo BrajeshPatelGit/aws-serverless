@@ -10,17 +10,22 @@ export const handler = async function(event) {
   // 1- List objects into bucket
   // 2- write on dynamodb table
 
-  try {
+
+    try {
     // 1- List objects into bucket
     const params = {
       Bucket: event.Records[0].s3.bucket.name // "s3-bucket-3424"  // event.Records[0].s3.bucket.name
     };
     const objectList = await s3Client.send(new ListObjectsV2Command(params));
     console.log("Success", objectList);
-
-    // 2- write on dynamodb table
- } catch (e) {
+} catch (e) {
     console.error(e);
   }
+
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
 };
 handler();
