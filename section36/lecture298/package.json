@@ -1,0 +1,10 @@
+{
+  "name": "lecture298-sqs-polling-lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for polling SQS queue messages",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
