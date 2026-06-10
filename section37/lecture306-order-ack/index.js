@@ -31,6 +31,7 @@ export const handler = async (event) => {
         // 2- generate id with uuid library and prepare payload
         const orderId = uuidv4();
         orderRequest.id = orderId;
+        orderRequest['sort-key-id'] = orderRequest.type; // Use order type as sort key
 
         // 3- publish message to sns topic with using sns sdk package
         let params = {
