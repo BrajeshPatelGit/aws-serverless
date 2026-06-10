@@ -37,3 +37,11 @@ Expected payload:
   "status":"CREATED",
   "type":"SHIP_REQUIRED"
 }
+
+{
+  "type":"ORDER-M-ATTR"
+}
+
+{"type":["INV-M-BODY"]}
+{"type":["SHIP-M-BODY"]}
+{"type":["NOT-M-BODY"]}

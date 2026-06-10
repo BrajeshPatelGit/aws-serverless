@@ -34,7 +34,7 @@ export const handler = async function(event) {
 
         // 4- save order item into inventory dynamodb table with using dnamodb sdk package
         const dynamodbParams = {
-            TableName: process.env.DYNAMODB_TABLE_NAME,
+            TableName: process.env.DYNAMODB_TABLE_NAME || 'inventory',
             Item: marshall(orderRequest || {})
         };
         const createResult = await ddbClient.send(new PutItemCommand(dynamodbParams));
