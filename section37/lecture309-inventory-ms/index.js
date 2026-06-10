@@ -30,6 +30,7 @@ export const handler = async function(event) {
 
         // set PK of invetory table
         orderRequest.code = orderRequest.item;
+        orderRequest['sort-key-code'] = orderRequest.type; // Add sort key
 
         // 4- save order item into inventory dynamodb table with using dnamodb sdk package
         const dynamodbParams = {
