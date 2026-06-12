@@ -8,7 +8,7 @@ kinesis data streams
 get kinesis name - test-kinesis
 
 RUN COMMAND:
-aws kinesis put-record --stream-name test-kinesis --partition-key 1 --data "Hello, this is kinesis test trigger to lambda."
+aws kinesis put-record --stream-name first-kin --partition-key 1 --data "Hello, this is kinesis test trigger to lambda."
 
 See error:
 Invalid base64: "Hello, this is kinesis test trigger to lambda."
@@ -22,7 +22,7 @@ result:
 SGVsbG8sIHRoaXMgaXMga2luZXNpcyB0ZXN0IHRyaWdnZXIgdG8gbGFtYmRhLg==
 
 RUN COMMAND:
-aws kinesis put-record --stream-name test-kinesis --partition-key 1 --data "SGVsbG8sIHRoaXMgaXMga2luZXNpcyB0ZXN0IHRyaWdnZXIgdG8gbGFtYmRhLg=="
+aws kinesis put-record --stream-name first-kin --partition-key 1 --data "SGVsbG8sIHRoaXMgaXMga2luZXNpcyB0ZXN0IHRyaWdnZXIgdG8gbGFtYmRhLg=="
 
 ---
 ASSIGNMENT:
