@@ -32,6 +32,11 @@ Event Pattern:
   "source": ["com.swn.basket.checkoutbasket"]
 }
 
+{
+  "detail-type": ["TestEvent"],
+  "source": ["com.swn.basket.checkoutbasket"]
+}
+
 ---
 Test with publish event message to Event Bridge Custom Bus:
 

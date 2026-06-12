@@ -12,3 +12,18 @@
       "price": "100"
     }
 }
+
+{
+  "version": "0",
+  "id": "8ab492ef-455c-bec5-9af8-a12a5771fada",
+  "detail-type": "CheckoutBasket",
+  "source": "com.swn.basket.checkoutbasket",
+  "account": "229209687346",
+  "time": "2026-06-12T07:30:08Z",
+  "region": "ap-south-1",
+  "resources": [],
+  "detail": {
+    "item": "iphone",
+    "price": "100"
+  }
+}
